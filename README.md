@@ -12,7 +12,9 @@
 </p>
 
 <p align="center">
-  <img src="screenshots/01-home.png" alt="Главная страница" width="800">
+  <img src="screenshots/01-home-mobile.png" alt="Главная страница" width="320">
+  <img src="screenshots/02-listings-mobile.png" alt="Каталог" width="320">
+  <img src="screenshots/03-property-detail-mobile.png" alt="Детали" width="320">
 </p>
 
 ---
@@ -33,91 +35,41 @@
 
 ## 🖼️ Скриншоты
 
-<details open>
-<summary><strong>📱 Основные страницы</strong></summary>
-<br>
-
-### 🏠 Главная страница
-Поисковая строка, популярные предложения, категории недвижимости
+### 📱 Мобильное приложение (Android)
 
 <p align="center">
-  <img src="screenshots/01-home.png" alt="Главная" width="800">
+  <img src="screenshots/01-home-mobile.png" alt="Главная" width="280">
+  <img src="screenshots/02-listings-mobile.png" alt="Каталог" width="280">
+  <img src="screenshots/03-property-detail-mobile.png" alt="Детали" width="280">
 </p>
-
-### 🔍 Каталог объявлений
-Сетка объектов с фильтрацией по цене, типу и району
 
 <p align="center">
-  <img src="screenshots/02-listings.png" alt="Каталог" width="800">
+  <img src="screenshots/04-login-mobile.png" alt="Вход" width="280">
+  <img src="screenshots/05-register-mobile.png" alt="Регистрация" width="280">
+  <img src="screenshots/06-renter-dashboard-mobile.png" alt="Дашборд арендатора" width="280">
 </p>
-
-### 🏡 Карточка объекта
-Детальная информация, галерея, карта, удобства и контакты арендодателя
 
 <p align="center">
-  <img src="screenshots/03-property-detail.png" alt="Детали" width="800">
+  <img src="screenshots/07-favorites-mobile.png" alt="Избранное" width="280">
+  <img src="screenshots/08-landlord-dashboard-mobile.png" alt="Дашборд арендодателя" width="280">
+  <img src="screenshots/09-booking-requests-mobile.png" alt="Запросы" width="280">
 </p>
-
-### 🔑 Вход
-Форма авторизации с валидацией и ссылкой на восстановление пароля
-
-<p align="center">
-  <img src="screenshots/04-login.png" alt="Вход" width="800">
-</p>
-
-### 📝 Регистрация
-Создание аккаунта с выбором роли (арендатор или арендодатель)
-
-<p align="center">
-  <img src="screenshots/05-register.png" alt="Регистрация" width="800">
-</p>
-
-</details>
 
 <details>
-<summary><strong>👤 Панель арендатора</strong></summary>
+<summary>📋 Описание страниц</summary>
 <br>
 
-### 📊 Дашборд
-Обзор сохранённых объектов, активных бронирований и рекомендаций
-
-<p align="center">
-  <img src="screenshots/06-renter-dashboard.png" alt="Дашборд арендатора" width="800">
-</p>
-
-### ❤️ Избранное
-Сохранённые варианты с быстрым доступом к сравнению
-
-<p align="center">
-  <img src="screenshots/07-favorites.png" alt="Избранное" width="800">
-</p>
-
-### 📅 Мои бронирования
-История и статусы всех запросов на бронирование
-
-<p align="center">
-  <img src="screenshots/08-my-bookings.png" alt="Бронирования" width="800">
-</p>
-
-</details>
-
-<details>
-<summary><strong>🏢 Панель арендодателя</strong></summary>
-<br>
-
-### 📊 Дашборд арендодателя
-Управление объявлениями, просмотры и статистика
-
-<p align="center">
-  <img src="screenshots/09-landlord-dashboard.png" alt="Дашборд арендодателя" width="800">
-</p>
-
-### 📋 Запросы на бронирование
-Подтверждение и отклонение запросов арендаторов
-
-<p align="center">
-  <img src="screenshots/10-booking-requests.png" alt="Запросы" width="800">
-</p>
+| Страница | Описание |
+|----------|----------|
+| 🏠 **Главная** | Поисковая строка, популярные предложения, категории недвижимости |
+| 🔍 **Каталог** | Сетка объектов с фильтрацией по цене, типу и району |
+| 🏡 **Карточка** | Галерея изображений, карта, описание, удобства, контакты |
+| 🔑 **Вход** | JWT-авторизация с валидацией и восстановлением пароля |
+| 📝 **Регистрация** | Создание аккаунта с выбором роли |
+| 📊 **Дашборд** | Обзор бронирований, избранного и рекомендаций |
+| ❤️ **Избранное** | Сохранённые варианты с быстрым сравнением |
+| 🏢 **Арендодатель** | Управление объявлениями и статистика |
+| 📋 **Запросы** | Подтверждение и отклонение бронирований |
 
 </details>
 
