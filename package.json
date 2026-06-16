@@ -1,0 +1,19 @@
+{
+  "name": "rental-app",
+  "private": true,
+  "workspaces": ["client", "server", "shared"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "npm -w client run dev",
+    "dev:server": "npm -w server run dev",
+    "build": "npm -w shared run build && npm -w client run build && npm -w server run build",
+    "lint": "npm -w client run lint && npm -w server run lint",
+    "typecheck": "npm -w client run typecheck && npm -w server run typecheck",
+    "db:migrate": "npm -w server run db:migrate",
+    "db:seed": "npm -w server run db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.5.0"
+  }
+}
