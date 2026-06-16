@@ -5,6 +5,7 @@ import { useAuthStore } from '@/stores/auth.store';
 import Skeleton from '@/components/ui/Skeleton';
 import EmptyState from '@/components/ui/EmptyState';
 import Badge from '@/components/ui/Badge';
+import { BOOKING_STATUS_LABELS } from '@shared/constants';
 import { Heart, CheckCircle, Search, Clock } from 'lucide-react';
 
 export default function RenterDashboardPage() {
@@ -38,15 +39,15 @@ export default function RenterDashboardPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-display font-bold text-neutral-900 mb-1">Welcome, {user?.fullName}</h1>
-      <p className="text-neutral-500 mb-8">Here's an overview of your rental journey.</p>
+      <h1 className="text-2xl font-display font-bold text-neutral-900 mb-1">Добро пожаловать, {user?.fullName}</h1>
+      <p className="text-neutral-500 mb-8">Обзор вашего пути арендатора.</p>
 
       {isNewUser ? (
         <EmptyState
           icon={<Search className="w-12 h-12" />}
-          title="Start your search"
-          description="Browse properties to find your next home. Save properties you like to compare them later."
-          action={{ label: 'Browse Listings', to: '/listings' }}
+          title="Начните поиск"
+          description="Ищите объекты, чтобы найти новый дом. Сохраняйте понравившиеся, чтобы сравнить их позже."
+          action={{ label: 'Смотреть объекты', to: '/listings' }}
         />
       ) : (
         <>
@@ -57,7 +58,7 @@ export default function RenterDashboardPage() {
                 <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center"><Heart className="w-6 h-6 text-red-500" /></div>
                 <div>
                   <div className="text-2xl font-bold text-neutral-900">{favoritesCount}</div>
-                  <div className="text-sm text-neutral-400">Saved Properties</div>
+                  <div className="text-sm text-neutral-400">Сохранённые объекты</div>
                 </div>
               </div>
             </Link>
@@ -66,7 +67,7 @@ export default function RenterDashboardPage() {
                 <div className="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center"><Clock className="w-6 h-6 text-amber-500" /></div>
                 <div>
                   <div className="text-2xl font-bold text-neutral-900">{pendingCount}</div>
-                  <div className="text-sm text-neutral-400">Pending Requests</div>
+                  <div className="text-sm text-neutral-400">Ожидающие запросы</div>
                 </div>
               </div>
             </Link>
@@ -75,7 +76,7 @@ export default function RenterDashboardPage() {
                 <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center"><CheckCircle className="w-6 h-6 text-green-500" /></div>
                 <div>
                   <div className="text-2xl font-bold text-neutral-900">{acceptedCount}</div>
-                  <div className="text-sm text-neutral-400">Accepted Bookings</div>
+                  <div className="text-sm text-neutral-400">Подтверждённые бронирования</div>
                 </div>
               </div>
             </div>
@@ -85,21 +86,21 @@ export default function RenterDashboardPage() {
           {bookings.length > 0 && (
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-display font-semibold text-neutral-900">Recent Booking Requests</h2>
-                <Link to="/my-bookings" className="text-sm text-brand-600 hover:text-brand-700">View all</Link>
+                <h2 className="text-lg font-display font-semibold text-neutral-900">Последние запросы на бронирование</h2>
+                <Link to="/my-bookings" className="text-sm text-brand-600 hover:text-brand-700">Все</Link>
               </div>
               <div className="space-y-3">
                 {bookings.slice(0, 3).map((booking: any) => (
                   <div key={booking.id} className="bg-white rounded-xl shadow-card p-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <img src={booking.property?.images?.[0]?.url || 'https://placehold.co/80'} alt={booking.property?.title || 'Property'} className="w-14 h-14 rounded-lg object-cover" loading="lazy" decoding="async" />
+                      <img src={booking.property?.images?.[0]?.url || 'https://placehold.co/80'} alt={booking.property?.title || 'Объект'} className="w-14 h-14 rounded-lg object-cover" loading="lazy" decoding="async" />
                       <div>
-                        <p className="font-medium text-neutral-900 text-sm">{booking.property?.title || 'Property'}</p>
-                        <p className="text-xs text-neutral-400">{new Date(booking.moveInDate).toLocaleDateString()} · {booking.durationMonths} months</p>
+                        <p className="font-medium text-neutral-900 text-sm">{booking.property?.title || 'Объект'}</p>
+                        <p className="text-xs text-neutral-400">{new Date(booking.moveInDate).toLocaleDateString()} · {booking.durationMonths} мес.</p>
                       </div>
                     </div>
                     <Badge variant={booking.status === 'pending' ? 'warning' : booking.status === 'accepted' ? 'success' : 'danger'}>
-                      {booking.status}
+                      {BOOKING_STATUS_LABELS[booking.status] || booking.status}
                     </Badge>
                   </div>
                 ))}

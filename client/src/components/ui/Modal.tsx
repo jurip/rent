@@ -24,7 +24,7 @@ export default function Modal({ open, onClose, title, children, className }: Mod
             <div className="flex items-center justify-between mb-4">
               <Dialog.Title className="text-lg font-display font-semibold text-neutral-900">{title}</Dialog.Title>
               <Dialog.Close asChild>
-                <button className="p-1 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 transition-colors" aria-label="Close dialog">
+                <button className="p-1 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 transition-colors" aria-label="Закрыть диалог">
                   <X className="w-5 h-5" aria-hidden="true" />
                 </button>
               </Dialog.Close>

@@ -53,15 +53,15 @@ export default function FavoritesPage() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-display font-bold text-neutral-900 mb-1">Saved Properties</h1>
-          <p className="text-neutral-500">{favorites.length} {favorites.length === 1 ? 'property' : 'properties'} saved</p>
+          <h1 className="text-2xl font-display font-bold text-neutral-900 mb-1">Сохранённые объекты</h1>
+          <p className="text-neutral-500">{favorites.length} {favorites.length === 1 ? 'сохранённый объект' : 'сохранённых объектов'}</p>
         </div>
         {favorites.length >= 2 && (
           <div className="flex gap-3">
             <Link to={`/favorites/compare?ids=${Array.from(selectedIds).join(',')}`}>
               <Button variant="outline" size="sm" disabled={selectedIds.size < 2}>
                 <ArrowLeftRight className="w-4 h-4 mr-1.5" />
-                Compare ({selectedIds.size})
+                Сравнить ({selectedIds.size})
               </Button>
             </Link>
           </div>
@@ -71,9 +71,9 @@ export default function FavoritesPage() {
       {favorites.length === 0 ? (
         <EmptyState
           icon={<Heart className="w-12 h-12" />}
-          title="No saved properties yet"
-          description="Start browsing and save the ones you love!"
-          action={{ label: 'Browse Listings', to: '/listings' }}
+          title="Нет сохранённых объектов"
+          description="Начните просмотр и сохраняйте понравившиеся!"
+          action={{ label: 'Смотреть объявления', to: '/listings' }}
         />
       ) : (
         <div className="space-y-4">

@@ -55,7 +55,7 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const property = await propertyService.getById(req.params.id);
     if (!property) {
-      res.status(404).json({ success: false, message: 'Property not found' });
+      res.status(404).json({ success: false, message: 'Объект не найден' });
       return;
     }
     res.json({ success: true, data: property });
@@ -91,7 +91,7 @@ router.patch('/:id', authenticate, requireRole('landlord'), async (req: Request,
 router.delete('/:id', authenticate, requireRole('landlord'), async (req: Request, res: Response, next: NextFunction) => {
   try {
     await propertyService.delete(req.params.id, req.user!.userId);
-    res.json({ success: true, message: 'Property deleted' });
+    res.json({ success: true, message: 'Объект удалён' });
   } catch (error: any) {
     next(error);
   }
@@ -111,7 +111,7 @@ router.get('/landlord/mine', authenticate, requireRole('landlord'), async (req: 
 router.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error('Property route error:', err);
   const status = (err as any).statusCode || 500;
-  res.status(status).json({ success: false, message: err.message || 'Internal server error' });
+  res.status(status).json({ success: false, message: err.message || 'Внутренняя ошибка сервера' });
 });
 
 export default router;

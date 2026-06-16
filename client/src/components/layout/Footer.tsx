@@ -11,13 +11,13 @@ export default function Footer() {
             RentHub
           </Link>
           <p className="text-sm text-neutral-400">
-            &copy; {new Date().getFullYear()} RentHub. All rights reserved.
+            &copy; {new Date().getFullYear()} RentHub. Все права защищены.
           </p>
           <nav className="flex gap-6">
-            <Link to="/listings" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Browse</Link>
-            <a href="#" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Privacy</a>
-            <a href="#" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Terms</a>
-            <a href="#" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Contact</a>
+            <Link to="/listings" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Поиск</Link>
+            <a href="#" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Конфиденциальность</a>
+            <a href="#" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Условия</a>
+            <a href="#" className="text-sm text-neutral-400 hover:text-neutral-600 transition-colors">Контакты</a>
           </nav>
         </div>
       </div>

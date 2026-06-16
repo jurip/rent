@@ -25,11 +25,11 @@ router.post('/', authenticate, requireRole('renter'), validate(createSchema), as
 
     const property = await prisma.property.findUnique({ where: { id: propertyId }, select: { landlordId: true } });
     if (!property) {
-      res.status(404).json({ success: false, message: 'Property not found' });
+      res.status(404).json({ success: false, message: 'Объект не найден' });
       return;
     }
     if (property.landlordId === req.user!.userId) {
-      res.status(400).json({ success: false, message: 'You cannot book your own property' });
+      res.status(400).json({ success: false, message: 'Вы не можете забронировать собственный объект' });
       return;
     }
 
@@ -80,11 +80,11 @@ router.patch('/:id', authenticate, requireRole('landlord'), validate(updateSchem
   try {
     const booking = await prisma.bookingRequest.findUnique({ where: { id: req.params.id } });
     if (!booking || booking.landlordId !== req.user!.userId) {
-      res.status(404).json({ success: false, message: 'Booking request not found' });
+      res.status(404).json({ success: false, message: 'Заявка на бронирование не найдена' });
       return;
     }
     if (booking.status !== 'pending') {
-      res.status(400).json({ success: false, message: 'This request has already been processed' });
+      res.status(400).json({ success: false, message: 'Этот запрос уже был обработан' });
       return;
     }
 
@@ -104,11 +104,11 @@ router.patch('/:id/cancel', authenticate, requireRole('renter'), async (req: Req
   try {
     const booking = await prisma.bookingRequest.findUnique({ where: { id: req.params.id } });
     if (!booking || booking.renterId !== req.user!.userId) {
-      res.status(404).json({ success: false, message: 'Booking request not found' });
+      res.status(404).json({ success: false, message: 'Заявка на бронирование не найдена' });
       return;
     }
     if (booking.status !== 'pending') {
-      res.status(400).json({ success: false, message: 'Only pending requests can be cancelled' });
+      res.status(400).json({ success: false, message: 'Можно отменить только ожидающие запросы' });
       return;
     }
 

@@ -14,7 +14,7 @@ export function validate(schema: ZodSchema) {
           if (!errors[path]) errors[path] = [];
           errors[path].push(issue.message);
         }
-        res.status(400).json({ success: false, message: 'Validation failed', errors });
+        res.status(400).json({ success: false, message: 'Ошибка валидации', errors });
         return;
       }
       next(error);

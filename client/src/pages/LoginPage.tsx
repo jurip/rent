@@ -16,9 +16,9 @@ export default function LoginPage() {
 
   const validate = (): boolean => {
     const errors: Record<string, string> = {};
-    if (!email.trim()) errors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Invalid email format';
-    if (!password) errors.password = 'Password is required';
+    if (!email.trim()) errors.email = 'Email обязателен';
+    else if (!/\S+@\S+\.\S+/.test(email)) errors.email = 'Неверный формат email';
+    if (!password) errors.password = 'Пароль обязателен';
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -40,8 +40,8 @@ export default function LoginPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-display font-bold text-neutral-900 mb-2">Welcome back</h1>
-          <p className="text-neutral-500">Sign in to your account to continue</p>
+          <h1 className="text-3xl font-display font-bold text-neutral-900 mb-2">С возвращением</h1>
+          <p className="text-neutral-500">Войдите в аккаунт, чтобы продолжить</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-card p-8 space-y-5">
@@ -65,9 +65,9 @@ export default function LoginPage() {
 
           <div>
             <Input
-              label="Password"
+              label="Пароль"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Введите ваш пароль"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               error={validationErrors.password}
@@ -77,19 +77,19 @@ export default function LoginPage() {
 
           <div className="flex justify-end">
             <Link to="/forgot-password" className="text-sm text-brand-600 hover:text-brand-700 transition-colors">
-              Forgot password?
+Забыли пароль?
             </Link>
           </div>
 
           <Button type="submit" variant="primary" size="lg" className="w-full" disabled={isLoading}>
             <LogIn className="w-4 h-4 mr-2" />
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? 'Вход...' : 'Войти'}
           </Button>
 
           <p className="text-center text-sm text-neutral-500">
-            Don't have an account?{' '}
+            Нет аккаунта?{' '}
             <Link to="/register" className="text-brand-600 hover:text-brand-700 font-medium transition-colors">
-              Create one
+              Создать
             </Link>
           </p>
         </form>

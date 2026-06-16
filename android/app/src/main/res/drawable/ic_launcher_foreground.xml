@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Background circle -->
+    <path
+        android:fillColor="#0D947E"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0" />
+    <!-- House icon -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,54v14h12v-10h8v10h12v-14L54,40Z"
+        android:strokeWidth="0" />
+</vector>

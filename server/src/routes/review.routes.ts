@@ -26,7 +26,7 @@ router.post('/', authenticate, requireRole('renter'), validate(createSchema), as
       where: { propertyId, renterId: req.user!.userId, status: 'accepted' },
     });
     if (!booking) {
-      res.status(403).json({ success: false, message: 'Only verified renters can leave a review' });
+      res.status(403).json({ success: false, message: 'Только подтверждённые арендаторы могут оставлять отзывы' });
       return;
     }
 
@@ -35,7 +35,7 @@ router.post('/', authenticate, requireRole('renter'), validate(createSchema), as
       where: { propertyId_renterId: { propertyId, renterId: req.user!.userId } },
     });
     if (existing) {
-      res.status(400).json({ success: false, message: 'You have already reviewed this property. You can edit your existing review.' });
+      res.status(400).json({ success: false, message: 'Вы уже оставили отзыв об этом объекте. Вы можете отредактировать его.' });
       return;
     }
 
@@ -55,7 +55,7 @@ router.patch('/:id', authenticate, requireRole('renter'), async (req: Request, r
   try {
     const review = await prisma.review.findUnique({ where: { id: req.params.id } });
     if (!review || review.renterId !== req.user!.userId) {
-      res.status(404).json({ success: false, message: 'Review not found' });
+      res.status(404).json({ success: false, message: 'Отзыв не найден' });
       return;
     }
 
@@ -76,11 +76,11 @@ router.delete('/:id', authenticate, requireRole('renter'), async (req: Request, 
   try {
     const review = await prisma.review.findUnique({ where: { id: req.params.id } });
     if (!review || review.renterId !== req.user!.userId) {
-      res.status(404).json({ success: false, message: 'Review not found' });
+      res.status(404).json({ success: false, message: 'Отзыв не найден' });
       return;
     }
     await prisma.review.delete({ where: { id: req.params.id } });
-    res.json({ success: true, message: 'Review deleted' });
+    res.json({ success: true, message: 'Отзыв удалён' });
   } catch (error) {
     next(error);
   }
@@ -94,7 +94,7 @@ router.post('/:id/response', authenticate, requireRole('landlord'), validate(res
       include: { property: { select: { landlordId: true } } },
     });
     if (!review || review.property.landlordId !== req.user!.userId) {
-      res.status(404).json({ success: false, message: 'Review not found' });
+      res.status(404).json({ success: false, message: 'Отзыв не найден' });
       return;
     }
 
@@ -115,7 +115,7 @@ router.post('/:id/report', authenticate, async (req: Request, res: Response, nex
   try {
     // In production: save report to DB, notify admins
     // For now, just acknowledge
-    res.json({ success: true, message: 'Thank you for your report. We will review this content.' });
+    res.json({ success: true, message: 'Спасибо за жалобу. Мы рассмотрим это содержание.' });
   } catch (error) {
     next(error);
   }
@@ -126,7 +126,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const propertyId = req.query.propertyId as string;
     if (!propertyId) {
-      res.status(400).json({ success: false, message: 'propertyId is required' });
+      res.status(400).json({ success: false, message: 'Требуется идентификатор объекта (propertyId)' });
       return;
     }
 

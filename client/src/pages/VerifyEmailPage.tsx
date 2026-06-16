@@ -11,17 +11,17 @@ export default function VerifyEmailPage() {
   useEffect(() => {
     if (!token) {
       setStatus('error');
-      setMessage('No verification token provided.');
+      setMessage('Токен подтверждения не предоставлен.');
       return;
     }
     api.get(`/auth/verify-email?token=${token}`)
       .then(() => {
         setStatus('success');
-        setMessage('Your email has been verified. You can now log in.');
+        setMessage('Ваш email подтверждён. Теперь вы можете войти.');
       })
       .catch((err) => {
         setStatus('error');
-        setMessage(err.response?.data?.message || 'Failed to verify email. The link may have expired.');
+        setMessage(err.response?.data?.message || 'Не удалось подтвердить email. Возможно, срок ссылки истёк.');
       });
   }, [token]);
 
@@ -41,7 +41,7 @@ export default function VerifyEmailPage() {
         )}
 
         <div className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 ${statusClasses[status]}`}>
-          {status === 'loading' ? 'Verifying...' : status === 'success' ? 'Verified!' : 'Error'}
+          {status === 'loading' ? 'Проверка...' : status === 'success' ? 'Подтверждено!' : 'Ошибка'}
         </div>
 
         <p className="text-neutral-600 mb-6">{message}</p>
@@ -49,7 +49,7 @@ export default function VerifyEmailPage() {
         {status !== 'loading' && (
           <Link to="/login">
             <span className="inline-flex px-6 py-3 bg-brand-600 text-white rounded-xl font-medium hover:bg-brand-700 transition-colors">
-              Go to Login
+Перейти ко входу
             </span>
           </Link>
         )}

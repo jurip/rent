@@ -22,11 +22,11 @@ export default class ErrorBoundary extends Component<Props, State> {
         <div className="min-h-[70vh] flex items-center justify-center px-4">
           <div className="text-center max-w-md">
             <AlertTriangle className="w-16 h-16 text-red-300 mx-auto mb-4" />
-            <h2 className="text-xl font-display font-semibold text-neutral-700 mb-2">Something went wrong</h2>
-            <p className="text-neutral-400 mb-6">An unexpected error occurred. Please try refreshing the page.</p>
+            <h2 className="text-xl font-display font-semibold text-neutral-700 mb-2">Что-то пошло не так</h2>
+            <p className="text-neutral-400 mb-6">Произошла неожиданная ошибка. Попробуйте обновить страницу.</p>
             <Button variant="primary" onClick={() => window.location.reload()}>
               <RefreshCw className="w-4 h-4 mr-2" />
-              Reload Page
+              Обновить страницу
             </Button>
           </div>
         </div>

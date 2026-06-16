@@ -15,7 +15,7 @@ export default function ForgotPasswordPage() {
     e.preventDefault();
     setError('');
     if (!email.trim() || !/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address');
+      setError('Пожалуйста, укажите корректный email');
       return;
     }
     setIsLoading(true);
@@ -23,7 +23,7 @@ export default function ForgotPasswordPage() {
       await api.post('/auth/forgot-password', { email: email.trim() });
       setSubmitted(true);
     } catch {
-      setError('Something went wrong. Please try again.');
+      setError('Что-то пошло не так. Пожалуйста, попробуйте снова.');
     } finally {
       setIsLoading(false);
     }
@@ -36,12 +36,12 @@ export default function ForgotPasswordPage() {
           <div className="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Mail className="w-8 h-8 text-brand-600" />
           </div>
-          <h2 className="text-2xl font-display font-bold text-neutral-900 mb-2">Check your email</h2>
+          <h2 className="text-2xl font-display font-bold text-neutral-900 mb-2">Проверьте ваш email</h2>
           <p className="text-neutral-500 mb-6">
-            If an account with that email exists, we've sent a password reset link.
+            Если аккаунт с таким email существует, мы отправили ссылку для сброса пароля.
           </p>
           <Link to="/login" className="text-brand-600 hover:text-brand-700 font-medium transition-colors">
-            Back to login
+            Вернуться ко входу
           </Link>
         </div>
       </div>
@@ -52,8 +52,8 @@ export default function ForgotPasswordPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-display font-bold text-neutral-900 mb-2">Forgot password?</h1>
-          <p className="text-neutral-500">Enter your email and we'll send you a reset link</p>
+          <h1 className="text-3xl font-display font-bold text-neutral-900 mb-2">Забыли пароль?</h1>
+          <p className="text-neutral-500">Введите ваш email, и мы отправим вам ссылку для сброса</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-card p-8 space-y-5">
@@ -62,18 +62,18 @@ export default function ForgotPasswordPage() {
           <Input
             label="Email"
             type="email"
-            placeholder="you@example.com"
+            placeholder="ваш@email.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
 
           <Button type="submit" variant="primary" size="lg" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Sending...' : 'Send Reset Link'}
+            {isLoading ? 'Отправка...' : 'Отправить ссылку'}
           </Button>
 
           <p className="text-center text-sm text-neutral-500">
             <Link to="/login" className="text-brand-600 hover:text-brand-700 font-medium transition-colors">
-              Back to login
+              Вернуться ко входу
             </Link>
           </p>
         </form>

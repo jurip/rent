@@ -11,7 +11,7 @@ router.post('/:propertyId', authenticate, requireRole('renter'), async (req: Req
       where: { propertyId_userId: { propertyId: req.params.propertyId, userId: req.user!.userId } },
     });
     if (existing) {
-      res.json({ success: true, data: existing, message: 'Already in favorites' });
+      res.json({ success: true, data: existing, message: 'Уже в избранном' });
       return;
     }
     const favorite = await prisma.favorite.create({
@@ -29,7 +29,7 @@ router.delete('/:propertyId', authenticate, requireRole('renter'), async (req: R
     await prisma.favorite.deleteMany({
       where: { propertyId: req.params.propertyId, userId: req.user!.userId },
     });
-    res.json({ success: true, message: 'Removed from favorites' });
+    res.json({ success: true, message: 'Удалено из избранного' });
   } catch (error) {
     next(error);
   }

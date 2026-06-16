@@ -32,28 +32,28 @@ export default function ComparePage() {
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(price);
 
   const rows = [
-    { label: 'Price', render: (p: any) => formatPrice(p.price) + '/mo' },
-    { label: 'Type', render: (p: any) => p.propertyType },
-    { label: 'Bedrooms', render: (p: any) => p.bedrooms === 0 ? 'Studio' : String(p.bedrooms) },
-    { label: 'Bathrooms', render: (p: any) => String(p.bathrooms) },
-    { label: 'Square Feet', render: (p: any) => p.squareFeet.toLocaleString() },
-    { label: 'Furnished', render: (p: any) => p.furnished ? <Check className="w-5 h-5 text-green-500" /> : <Minus className="w-5 h-5 text-neutral-300" /> },
-    { label: 'Location', render: (p: any) => `${p.neighborhood}, ${p.city}` },
-    { label: 'Amenities', render: (p: any) => p.amenities?.length || 0 },
+    { label: 'Цена', render: (p: any) => formatPrice(p.price) + '/мес.' },
+    { label: 'Тип', render: (p: any) => p.propertyType },
+    { label: 'Спальни', render: (p: any) => p.bedrooms === 0 ? 'Студия' : String(p.bedrooms) },
+    { label: 'Ванные', render: (p: any) => String(p.bathrooms) },
+    { label: 'Площадь, кв. фт', render: (p: any) => p.squareFeet.toLocaleString() },
+    { label: 'Меблировано', render: (p: any) => p.furnished ? <Check className="w-5 h-5 text-green-500" /> : <Minus className="w-5 h-5 text-neutral-300" /> },
+    { label: 'Расположение', render: (p: any) => `${p.neighborhood}, ${p.city}` },
+    { label: 'Удобства', render: (p: any) => p.amenities?.length || 0 },
   ];
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-display font-bold text-neutral-900">Compare Properties</h1>
-        <Link to="/favorites"><Button variant="ghost" size="sm">Back to Favorites</Button></Link>
+        <h1 className="text-2xl font-display font-bold text-neutral-900">Сравнение объектов</h1>
+        <Link to="/favorites"><Button variant="ghost" size="sm">Назад к избранному</Button></Link>
       </div>
 
       <div className="overflow-x-auto bg-white rounded-2xl shadow-card">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-neutral-100">
-              <th className="p-4 text-left font-medium text-neutral-500 w-40">Feature</th>
+              <th className="p-4 text-left font-medium text-neutral-500 w-40">Характеристика</th>
               {properties.map((p) => (
                 <th key={p.id} className="p-4 text-center">
                   <img src={p.images?.[0]?.thumbnailUrl || 'https://placehold.co/200'} alt={p.title} className="w-full h-36 object-cover rounded-xl mb-2" loading="lazy" decoding="async" />

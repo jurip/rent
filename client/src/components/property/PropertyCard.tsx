@@ -3,6 +3,7 @@ import { Heart, Bed, Bath, Maximize, MapPin } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Property } from '@shared/types';
+import { PROPERTY_TYPE_LABELS } from '@shared/constants';
 import { useAuthStore } from '@/stores/auth.store';
 
 interface PropertyCardProps {
@@ -45,7 +46,7 @@ export default function PropertyCard({ property, onFavoriteToggle, isFavorited =
           />
           {/* Price overlay */}
           <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm text-neutral-900 px-3 py-1.5 rounded-xl text-sm font-semibold shadow-sm">
-            {formatPrice(property.price)}<span className="text-neutral-400 font-normal">/mo</span>
+            {formatPrice(property.price)}<span className="text-neutral-400 font-normal">/мес</span>
           </div>
           {/* Favorite button */}
           {isAuthenticated && (
@@ -53,7 +54,7 @@ export default function PropertyCard({ property, onFavoriteToggle, isFavorited =
               whileTap={{ scale: 0.8 }}
               onClick={handleFavorite}
               className="absolute top-3 right-3 p-2.5 bg-white/90 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors"
-              aria-label={favorited ? 'Remove from favorites' : 'Add to favorites'}
+              aria-label={favorited ? 'Удалить из избранного' : 'Добавить в избранное'}
             >
               <Heart
                 className={`w-4 h-4 transition-colors ${
@@ -65,8 +66,8 @@ export default function PropertyCard({ property, onFavoriteToggle, isFavorited =
           )}
           {/* Property type badge */}
           <div className="absolute top-3 left-3">
-            <span className="px-2.5 py-1 bg-white/90 backdrop-blur-sm text-neutral-700 text-xs font-medium rounded-lg capitalize shadow-sm">
-              {property.propertyType}
+            <span className="px-2.5 py-1 bg-white/90 backdrop-blur-sm text-neutral-700 text-xs font-medium rounded-lg shadow-sm">
+              {PROPERTY_TYPE_LABELS[property.propertyType] || property.propertyType}
             </span>
           </div>
         </div>
@@ -88,7 +89,7 @@ export default function PropertyCard({ property, onFavoriteToggle, isFavorited =
               <Bath className="w-4 h-4" /> {property.bathrooms}
             </span>
             <span className="flex items-center gap-1">
-              <Maximize className="w-4 h-4" /> {property.squareFeet.toLocaleString()} sqft
+              <Maximize className="w-4 h-4" /> {property.squareFeet.toLocaleString()} м²
             </span>
           </div>
         </div>

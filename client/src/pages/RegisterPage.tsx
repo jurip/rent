@@ -27,11 +27,11 @@ export default function RegisterPage() {
 
   const validate = (): boolean => {
     const errors: Record<string, string> = {};
-    if (!form.fullName.trim() || form.fullName.length < 2) errors.fullName = 'Full name is required (min 2 characters)';
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) errors.email = 'Valid email is required';
-    if (!form.phone.trim() || form.phone.length < 5) errors.phone = 'Valid phone number is required';
-    if (form.password.length < PASSWORD_MIN_LENGTH) errors.password = `Password must be at least ${PASSWORD_MIN_LENGTH} characters`;
-    if (form.password !== form.confirmPassword) errors.confirmPassword = 'Passwords do not match';
+    if (!form.fullName.trim() || form.fullName.length < 2) errors.fullName = 'Имя и фамилия обязательны (минимум 2 символа)';
+    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) errors.email = 'Требуется корректный email';
+    if (!form.phone.trim() || form.phone.length < 5) errors.phone = 'Требуется корректный номер телефона';
+    if (form.password.length < PASSWORD_MIN_LENGTH) errors.password = `Пароль должен содержать минимум ${PASSWORD_MIN_LENGTH} символов`;
+    if (form.password !== form.confirmPassword) errors.confirmPassword = 'Пароли не совпадают';
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -51,7 +51,7 @@ export default function RegisterPage() {
         role: form.role,
       });
       if (result.needsVerification) {
-        setSuccessMessage('Registration successful! Please check your email to verify your account.');
+        setSuccessMessage('Регистрация прошла успешно! Проверьте почту для подтверждения аккаунта.');
       }
     } catch {
       // Error handled by store
@@ -68,10 +68,10 @@ export default function RegisterPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
-            <h2 className="text-2xl font-display font-bold text-neutral-900 mb-2">Check your email</h2>
+            <h2 className="text-2xl font-display font-bold text-neutral-900 mb-2">Проверьте почту</h2>
             <p className="text-neutral-500 mb-6">{successMessage}</p>
             <Link to="/login" className="text-brand-600 hover:text-brand-700 font-medium transition-colors">
-              Go to login
+              Перейти ко входу
             </Link>
           </div>
         </div>
@@ -83,8 +83,8 @@ export default function RegisterPage() {
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-display font-bold text-neutral-900 mb-2">Create your account</h1>
-          <p className="text-neutral-500">Join RentHub and find your perfect home</p>
+          <h1 className="text-3xl font-display font-bold text-neutral-900 mb-2">Создайте аккаунт</h1>
+          <p className="text-neutral-500">Присоединяйтесь к RentHub и найдите идеальный дом</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-card p-8 space-y-5">
@@ -104,7 +104,7 @@ export default function RegisterPage() {
               }`}
             >
               <User className="w-5 h-5 mx-auto mb-1" />
-              <span className="text-sm font-medium">Renter</span>
+              <span className="text-sm font-medium">Арендатор</span>
             </button>
             <button
               type="button"
@@ -116,25 +116,25 @@ export default function RegisterPage() {
               }`}
             >
               <Building2 className="w-5 h-5 mx-auto mb-1" />
-              <span className="text-sm font-medium">Landlord</span>
+              <span className="text-sm font-medium">Арендодатель</span>
             </button>
           </div>
 
-          <Input label="Full Name" placeholder="John Doe" value={form.fullName} onChange={(e) => update('fullName', e.target.value)} error={validationErrors.fullName} />
+          <Input label="Имя и фамилия" placeholder="Иван Петров" value={form.fullName} onChange={(e) => update('fullName', e.target.value)} error={validationErrors.fullName} />
           <Input label="Email" type="email" placeholder="you@example.com" value={form.email} onChange={(e) => update('email', e.target.value)} error={validationErrors.email} />
-          <Input label="Phone" type="tel" placeholder="+1 (555) 000-0000" value={form.phone} onChange={(e) => update('phone', e.target.value)} error={validationErrors.phone} />
-          <Input label="Password" type="password" placeholder={`At least ${PASSWORD_MIN_LENGTH} characters`} value={form.password} onChange={(e) => update('password', e.target.value)} error={validationErrors.password} />
-          <Input label="Confirm Password" type="password" placeholder="Repeat your password" value={form.confirmPassword} onChange={(e) => update('confirmPassword', e.target.value)} error={validationErrors.confirmPassword} />
+          <Input label="Телефон" type="tel" placeholder="+7 (999) 000-00-00" value={form.phone} onChange={(e) => update('phone', e.target.value)} error={validationErrors.phone} />
+          <Input label="Пароль" type="password" placeholder={`Минимум ${PASSWORD_MIN_LENGTH} символов`} value={form.password} onChange={(e) => update('password', e.target.value)} error={validationErrors.password} />
+          <Input label="Подтверждение пароля" type="password" placeholder="Повторите пароль" value={form.confirmPassword} onChange={(e) => update('confirmPassword', e.target.value)} error={validationErrors.confirmPassword} />
 
           <Button type="submit" variant="primary" size="lg" className="w-full" disabled={isLoading}>
             <UserPlus className="w-4 h-4 mr-2" />
-            {isLoading ? 'Creating account...' : 'Create Account'}
+            {isLoading ? 'Создание аккаунта...' : 'Создать аккаунт'}
           </Button>
 
           <p className="text-center text-sm text-neutral-500">
-            Already have an account?{' '}
+            Уже есть аккаунт?{' '}
             <Link to="/login" className="text-brand-600 hover:text-brand-700 font-medium transition-colors">
-              Sign in
+              Войти
             </Link>
           </p>
         </form>

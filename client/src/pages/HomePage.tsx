@@ -4,9 +4,9 @@ import Button from '@/components/ui/Button';
 import { Search, Home, Shield, Zap } from 'lucide-react';
 
 const features = [
-  { icon: Search, title: 'Smart Search', description: 'Find your ideal home with powerful filters for location, price, amenities, and more.' },
-  { icon: Shield, title: 'Verified Listings', description: 'Every property is verified by our team to ensure accuracy and quality.' },
-  { icon: Zap, title: 'Instant Booking', description: 'Submit rental requests directly and track their status in real time.' },
+  { icon: Search, title: 'Умный поиск', description: 'Найдите идеальный дом с мощными фильтрами по местоположению, цене, удобствам и многому другому.' },
+  { icon: Shield, title: 'Проверенные объявления', description: 'Каждый объект проверяется нашей командой для обеспечения точности и качества.' },
+  { icon: Zap, title: 'Мгновенное бронирование', description: 'Отправляйте запросы на аренду напрямую и отслеживайте их статус в реальном времени.' },
 ];
 
 export default function HomePage() {
@@ -23,22 +23,22 @@ export default function HomePage() {
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
-              Find Your Perfect <span className="text-brand-400">Home</span>
+              Найдите идеальный <span className="text-brand-400">дом</span>
             </h1>
             <p className="text-lg md:text-xl text-neutral-300 mb-10 leading-relaxed">
-              Discover beautiful rental properties in the best neighborhoods.
-              From modern lofts to charming family homes — your next chapter starts here.
+              Откройте для себя красивые объекты аренды в лучших районах.
+              От современных лофтов до уютных семейных домов — ваша следующая глава начинается здесь.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/listings">
                 <Button variant="primary" size="lg" className="text-base px-8">
                   <Search className="w-5 h-5 mr-2" />
-                  Browse Listings
+                  Смотреть объявления
                 </Button>
               </Link>
               <Link to="/register">
                 <Button variant="outline" size="lg" className="text-base px-8 border-white/20 text-white hover:bg-white/10">
-                  Create Account
+                  Создать аккаунт
                 </Button>
               </Link>
             </div>
@@ -52,9 +52,9 @@ export default function HomePage() {
             className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-16 max-w-2xl mx-auto"
           >
             {[
-              { value: '10K+', label: 'Properties' },
-              { value: '5K+', label: 'Happy Renters' },
-              { value: '50+', label: 'Cities' },
+              { value: '10K+', label: 'Объектов' },
+              { value: '5K+', label: 'Довольных арендаторов' },
+              { value: '50+', label: 'Городов' },
             ].map((stat) => (
               <div key={stat.label} className="text-center">
                 <div className="text-2xl md:text-3xl font-display font-bold text-brand-400">{stat.value}</div>
@@ -68,8 +68,8 @@ export default function HomePage() {
       {/* Features */}
       <section className="max-w-7xl mx-auto px-4 py-20">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-display font-bold text-neutral-900 mb-3">Why RentHub?</h2>
-          <p className="text-neutral-500 max-w-lg mx-auto">A modern rental experience designed for both renters and landlords.</p>
+          <h2 className="text-3xl font-display font-bold text-neutral-900 mb-3">Почему RentHub?</h2>
+          <p className="text-neutral-500 max-w-lg mx-auto">Современный опыт аренды, созданный как для арендаторов, так и для арендодателей.</p>
         </div>
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, i) => (
@@ -94,12 +94,12 @@ export default function HomePage() {
       {/* CTA */}
       <section className="bg-brand-600 text-white">
         <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-          <h2 className="text-3xl font-display font-bold mb-3">Ready to find your next home?</h2>
-          <p className="text-brand-100 mb-8 max-w-md mx-auto">Start browsing our curated collection of rental properties today.</p>
+          <h2 className="text-3xl font-display font-bold mb-3">Готовы найти новый дом?</h2>
+          <p className="text-brand-100 mb-8 max-w-md mx-auto">Начните просматривать нашу подборку объектов аренды уже сегодня.</p>
           <Link to="/listings">
             <Button variant="secondary" size="lg" className="text-base px-8">
               <Home className="w-5 h-5 mr-2" />
-              Explore Properties
+              Посмотреть объекты
             </Button>
           </Link>
         </div>

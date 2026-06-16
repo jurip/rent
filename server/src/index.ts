@@ -74,7 +74,7 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
   console.error('Unhandled error:', err);
   res.status(500).json({
     success: false,
-    message: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message,
+    message: process.env.NODE_ENV === 'production' ? 'Внутренняя ошибка сервера' : err.message,
   });
 });
 

@@ -6,6 +6,7 @@ import Skeleton from '@/components/ui/Skeleton';
 import EmptyState from '@/components/ui/EmptyState';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
+import { PROPERTY_TYPE_LABELS, AMENITY_LABELS } from '@shared/constants';
 import { Building2, Eye, Clock, Plus, Trash2, ToggleLeft, ToggleRight } from 'lucide-react';
 
 export default function LandlordDashboardPage() {
@@ -42,7 +43,7 @@ export default function LandlordDashboardPage() {
   };
 
   const handleDelete = async (propertyId: string) => {
-    if (!confirm('Are you sure? This will delete the property and all associated data.')) return;
+    if (!confirm('Вы уверены? Это удалит объект и все связанные данные.')) return;
     try {
       await api.delete(`/properties/${propertyId}`);
       loadData();
@@ -67,12 +68,12 @@ export default function LandlordDashboardPage() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-display font-bold text-neutral-900 mb-1">Welcome, {user?.fullName}</h1>
-          <p className="text-neutral-500">Manage your properties and booking requests.</p>
+          <h1 className="text-2xl font-display font-bold text-neutral-900 mb-1">Добро пожаловать, {user?.fullName}</h1>
+          <p className="text-neutral-500">Управляйте объектами и запросами на бронирование.</p>
         </div>
         {!isNewUser && (
           <Button variant="primary" size="md" onClick={() => setShowCreateForm(!showCreateForm)}>
-            <Plus className="w-4 h-4 mr-2" /> Add New Listing
+            <Plus className="w-4 h-4 mr-2" /> Добавить объявление
           </Button>
         )}
       </div>
@@ -80,9 +81,9 @@ export default function LandlordDashboardPage() {
       {isNewUser ? (
         <EmptyState
           icon={<Building2 className="w-12 h-12" />}
-          title="Create your first listing"
-          description="Get started by adding your property. Once it's live, potential renters can find and book it."
-          action={{ label: 'Create Listing', onClick: () => setShowCreateForm(true) }}
+          title="Создайте первое объявление"
+          description="Начните с добавления объекта. После публикации потенциальные арендаторы смогут найти и забронировать его."
+          action={{ label: 'Создать объявление', onClick: () => setShowCreateForm(true) }}
         />
       ) : (
         <>
@@ -91,40 +92,40 @@ export default function LandlordDashboardPage() {
             <div className="bg-white rounded-2xl shadow-card p-6">
               <div className="w-10 h-10 bg-brand-50 rounded-xl flex items-center justify-center mb-3"><Building2 className="w-5 h-5 text-brand-600" /></div>
               <div className="text-2xl font-bold text-neutral-900">{properties.length}</div>
-              <div className="text-sm text-neutral-400">Active Listings</div>
+              <div className="text-sm text-neutral-400">Активные объявления</div>
             </div>
             <div className="bg-white rounded-2xl shadow-card p-6">
               <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-3"><Eye className="w-5 h-5 text-blue-600" /></div>
               <div className="text-2xl font-bold text-neutral-900">{totalViews}</div>
-              <div className="text-sm text-neutral-400">Total Views</div>
+              <div className="text-sm text-neutral-400">Всего просмотров</div>
             </div>
             <div className="bg-white rounded-2xl shadow-card p-6">
               <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center mb-3"><Clock className="w-5 h-5 text-amber-600" /></div>
               <div className="text-2xl font-bold text-neutral-900">{pendingBookings}</div>
-              <div className="text-sm text-neutral-400">Pending Requests</div>
+              <div className="text-sm text-neutral-400">Ожидающие запросы</div>
             </div>
             <div className="bg-white rounded-2xl shadow-card p-6">
               <div className="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center mb-3"><Eye className="w-5 h-5 text-green-600" /></div>
               <div className="text-2xl font-bold text-neutral-900">{bookings.length - pendingBookings}</div>
-              <div className="text-sm text-neutral-400">Processed Requests</div>
+              <div className="text-sm text-neutral-400">Обработанные запросы</div>
             </div>
           </div>
 
           {/* Property Management */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-display font-semibold text-neutral-900">Your Properties</h2>
-              <Link to="/landlord/bookings" className="text-sm text-brand-600 hover:text-brand-700">View Booking Requests &rarr;</Link>
+              <h2 className="text-lg font-display font-semibold text-neutral-900">Ваши объекты</h2>
+              <Link to="/landlord/bookings" className="text-sm text-brand-600 hover:text-brand-700">Запросы на бронирование &rarr;</Link>
             </div>
             <div className="bg-white rounded-2xl shadow-card overflow-hidden">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-neutral-100 bg-neutral-50">
-                    <th className="text-left p-4 font-medium text-neutral-500">Property</th>
-                    <th className="text-left p-4 font-medium text-neutral-500 hidden md:table-cell">Price</th>
-                    <th className="text-left p-4 font-medium text-neutral-500 hidden md:table-cell">Status</th>
-                    <th className="text-left p-4 font-medium text-neutral-500 hidden md:table-cell">Views</th>
-                    <th className="text-right p-4 font-medium text-neutral-500">Actions</th>
+                    <th className="text-left p-4 font-medium text-neutral-500">Объект</th>
+                    <th className="text-left p-4 font-medium text-neutral-500 hidden md:table-cell">Цена</th>
+                    <th className="text-left p-4 font-medium text-neutral-500 hidden md:table-cell">Статус</th>
+                    <th className="text-left p-4 font-medium text-neutral-500 hidden md:table-cell">Просмотры</th>
+                    <th className="text-right p-4 font-medium text-neutral-500">Действия</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -139,7 +140,7 @@ export default function LandlordDashboardPage() {
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 hidden md:table-cell text-neutral-700">${prop.price.toLocaleString()}/mo</td>
+                      <td className="p-4 hidden md:table-cell text-neutral-700">${prop.price.toLocaleString()}/мес</td>
                       <td className="p-4 hidden md:table-cell">
                         <Badge variant={prop.status === 'active' ? 'success' : 'default'}>{prop.status}</Badge>
                       </td>
@@ -197,7 +198,7 @@ function CreateListingForm({ onCreated, onCancel }: { onCreated: () => void; onC
       });
       onCreated();
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to create listing');
+      setError(err.response?.data?.message || 'Не удалось создать объявление');
     } finally {
       setSubmitting(false);
     }
@@ -208,9 +209,9 @@ function CreateListingForm({ onCreated, onCancel }: { onCreated: () => void; onC
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-elevated max-w-lg w-full max-h-[80vh] overflow-y-auto p-6">
-        <h2 className="text-xl font-display font-semibold mb-4">Create New Listing</h2>
+        <h2 className="text-xl font-display font-semibold mb-4">Новое объявление</h2>
         <div className="flex gap-2 mb-6">
-          {['Details', 'Location', 'Amenities'].map((s, i) => (
+          {['Детали', 'Расположение', 'Удобства'].map((s, i) => (
             <div key={s} className={`flex-1 h-1 rounded-full ${step > i ? 'bg-brand-500' : 'bg-neutral-200'}`} />
           ))}
         </div>
@@ -219,22 +220,22 @@ function CreateListingForm({ onCreated, onCancel }: { onCreated: () => void; onC
 
         {step === 1 && (
           <div className="space-y-4">
-            <input className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Property Title" value={form.title} onChange={e => update('title', e.target.value)} />
-            <textarea className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm resize-none" rows={3} placeholder="Description" value={form.description} onChange={e => update('description', e.target.value)} />
+            <input className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Название объекта" value={form.title} onChange={e => update('title', e.target.value)} />
+            <textarea className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm resize-none" rows={3} placeholder="Описание" value={form.description} onChange={e => update('description', e.target.value)} />
             <div className="grid grid-cols-2 gap-3">
-              <input type="number" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Price/month" value={form.price} onChange={e => update('price', e.target.value)} />
+              <input type="number" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Цена/мес" value={form.price} onChange={e => update('price', e.target.value)} />
               <select className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" value={form.propertyType} onChange={e => update('propertyType', e.target.value)}>
-                <option value="apartment">Apartment</option><option value="house">House</option><option value="condo">Condo</option><option value="studio">Studio</option>
+                {Object.entries(PROPERTY_TYPE_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
               </select>
             </div>
             <div className="grid grid-cols-3 gap-3">
-              <input type="number" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Beds" value={form.bedrooms} onChange={e => update('bedrooms', e.target.value)} />
-              <input type="number" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Baths" value={form.bathrooms} onChange={e => update('bathrooms', e.target.value)} />
-              <input type="number" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="SqFt" value={form.squareFeet} onChange={e => update('squareFeet', e.target.value)} />
+              <input type="number" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Спальни" value={form.bedrooms} onChange={e => update('bedrooms', e.target.value)} />
+              <input type="number" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Ванные" value={form.bathrooms} onChange={e => update('bathrooms', e.target.value)} />
+              <input type="number" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="м²" value={form.squareFeet} onChange={e => update('squareFeet', e.target.value)} />
             </div>
             <div className="flex items-center gap-3">
               <label className="flex items-center gap-2 text-sm">
-                <input type="checkbox" checked={form.furnished} onChange={e => update('furnished', e.target.checked)} className="rounded" /> Furnished
+                <input type="checkbox" checked={form.furnished} onChange={e => update('furnished', e.target.checked)} className="rounded" /> С мебелью
               </label>
               <input type="date" className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm flex-1" value={form.availableDate} onChange={e => update('availableDate', e.target.value)} />
             </div>
@@ -243,10 +244,10 @@ function CreateListingForm({ onCreated, onCancel }: { onCreated: () => void; onC
 
         {step === 2 && (
           <div className="space-y-4">
-            <input className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Street Address" value={form.address} onChange={e => update('address', e.target.value)} />
+            <input className="w-full px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Улица и дом" value={form.address} onChange={e => update('address', e.target.value)} />
             <div className="grid grid-cols-2 gap-3">
-              <input className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="City" value={form.city} onChange={e => update('city', e.target.value)} />
-              <input className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Neighborhood" value={form.neighborhood} onChange={e => update('neighborhood', e.target.value)} />
+              <input className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Город" value={form.city} onChange={e => update('city', e.target.value)} />
+              <input className="px-4 py-2.5 rounded-xl border border-neutral-200 text-sm" placeholder="Район" value={form.neighborhood} onChange={e => update('neighborhood', e.target.value)} />
             </div>
           </div>
         )}
@@ -255,20 +256,20 @@ function CreateListingForm({ onCreated, onCancel }: { onCreated: () => void; onC
           <div className="flex flex-wrap gap-2">
             {amenities.map(a => (
               <button key={a} type="button" onClick={() => toggleAmenity(a)} className={`px-3 py-2 rounded-xl text-xs font-medium capitalize transition-colors ${form.amenities.includes(a) ? 'bg-brand-100 text-brand-700 border-2 border-brand-300' : 'bg-neutral-50 text-neutral-500 border-2 border-transparent hover:border-neutral-200'}`}>
-                {a.replace(/-/g, ' ')}
+                {AMENITY_LABELS[a] || a.replace(/-/g, ' ')}
               </button>
             ))}
           </div>
         )}
 
         <div className="flex gap-3 mt-6">
-          {step > 1 && <Button variant="ghost" size="sm" onClick={() => setStep(s => s - 1)}>Back</Button>}
+          {step > 1 && <Button variant="ghost" size="sm" onClick={() => setStep(s => s - 1)}>Назад</Button>}
           {step < 3 ? (
-            <Button variant="primary" size="sm" className="ml-auto" onClick={() => setStep(s => s + 1)}>Next</Button>
+            <Button variant="primary" size="sm" className="ml-auto" onClick={() => setStep(s => s + 1)}>Далее</Button>
           ) : (
-            <Button variant="primary" size="sm" className="ml-auto" onClick={handleSubmit} disabled={submitting}>{submitting ? 'Creating...' : 'Create Listing'}</Button>
+            <Button variant="primary" size="sm" className="ml-auto" onClick={handleSubmit} disabled={submitting}>{submitting ? 'Создание...' : 'Создать объявление'}</Button>
           )}
-          <Button variant="ghost" size="sm" onClick={onCancel}>Cancel</Button>
+          <Button variant="ghost" size="sm" onClick={onCancel}>Отмена</Button>
         </div>
       </div>
     </div>

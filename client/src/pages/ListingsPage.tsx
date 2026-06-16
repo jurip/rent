@@ -10,6 +10,7 @@ import Button from '@/components/ui/Button';
 import { Search, SlidersHorizontal, Map, Grid3X3, Home } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Property, PropertyListResponse } from '@shared/types';
+import { SORT_OPTIONS, PROPERTY_TYPE_LABELS } from '@shared/constants';
 
 export default function ListingsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,7 +51,7 @@ export default function ListingsPage() {
       setTotal(res.data.data.total);
       setTotalPages(res.data.data.totalPages);
     } catch {
-      setError('Failed to load properties. Please try again.');
+      setError('Не удалось загрузить объекты. Пожалуйста, попробуйте снова.');
     } finally {
       setIsLoading(false);
     }
@@ -94,7 +95,7 @@ export default function ListingsPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-neutral-400" />
             <input
               type="text"
-              placeholder="Search by city or neighborhood..."
+              placeholder="Поиск по городу или району..."
               value={search}
               onChange={(e) => updateParam('search', e.target.value)}
               className="w-full pl-10 pr-4 py-3 rounded-xl border border-neutral-200 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all"
@@ -107,7 +108,7 @@ export default function ListingsPage() {
             className="flex-shrink-0"
           >
             <SlidersHorizontal className="w-4 h-4 mr-2" />
-            Filters
+            Фильтры
           </Button>
           <div className="flex items-center bg-neutral-100 rounded-xl p-1">
             <button
@@ -128,10 +129,9 @@ export default function ListingsPage() {
             onChange={(e) => updateParam('sort', e.target.value)}
             className="bg-white border border-neutral-200 rounded-xl px-3 py-3 text-sm text-neutral-700 focus:outline-none focus:ring-2 focus:ring-brand-500/20"
           >
-            <option value="newest">Newest</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="rating">Highest Rated</option>
+            {SORT_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
           </select>
         </div>
 
@@ -143,28 +143,28 @@ export default function ListingsPage() {
             className="bg-white rounded-2xl shadow-card p-6 mb-4 grid grid-cols-2 md:grid-cols-5 gap-4"
           >
             <div>
-              <label className="text-xs font-medium text-neutral-500 mb-1 block">Min Price</label>
+              <label className="text-xs font-medium text-neutral-500 mb-1 block">Мин. цена</label>
               <input type="number" placeholder="$0" value={minPrice} onChange={(e) => updateParam('minPrice', e.target.value)} className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm" />
             </div>
             <div>
-              <label className="text-xs font-medium text-neutral-500 mb-1 block">Max Price</label>
+              <label className="text-xs font-medium text-neutral-500 mb-1 block">Макс. цена</label>
               <input type="number" placeholder="$9999" value={maxPrice} onChange={(e) => updateParam('maxPrice', e.target.value)} className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm" />
             </div>
             <div>
-              <label className="text-xs font-medium text-neutral-500 mb-1 block">Property Type</label>
+              <label className="text-xs font-medium text-neutral-500 mb-1 block">Тип объекта</label>
               <select value={propertyType} onChange={(e) => updateParam('propertyType', e.target.value)} className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm">
-                <option value="">All</option>
-                <option value="apartment">Apartment</option>
-                <option value="house">House</option>
-                <option value="condo">Condo</option>
-                <option value="studio">Studio</option>
+                <option value="">Все</option>
+                <option value="apartment">{PROPERTY_TYPE_LABELS.apartment}</option>
+                <option value="house">{PROPERTY_TYPE_LABELS.house}</option>
+                <option value="condo">{PROPERTY_TYPE_LABELS.condo}</option>
+                <option value="studio">{PROPERTY_TYPE_LABELS.studio}</option>
               </select>
             </div>
             <div>
-              <label className="text-xs font-medium text-neutral-500 mb-1 block">Min Bedrooms</label>
+              <label className="text-xs font-medium text-neutral-500 mb-1 block">Мин. спален</label>
               <select value={minBedrooms} onChange={(e) => updateParam('minBedrooms', e.target.value)} className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm">
-                <option value="">Any</option>
-                <option value="0">Studio</option>
+                <option value="">Любое</option>
+                <option value="0">Студия</option>
                 <option value="1">1+</option>
                 <option value="2">2+</option>
                 <option value="3">3+</option>
@@ -172,9 +172,9 @@ export default function ListingsPage() {
               </select>
             </div>
             <div>
-              <label className="text-xs font-medium text-neutral-500 mb-1 block">Min Bathrooms</label>
+              <label className="text-xs font-medium text-neutral-500 mb-1 block">Мин. ванных</label>
               <select value={minBathrooms} onChange={(e) => updateParam('minBathrooms', e.target.value)} className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm">
-                <option value="">Any</option>
+                <option value="">Любое</option>
                 <option value="1">1+</option>
                 <option value="2">2+</option>
                 <option value="3">3+</option>
@@ -185,7 +185,7 @@ export default function ListingsPage() {
 
         {/* Results count */}
         {!isLoading && (
-          <p className="text-sm text-neutral-400">{total} {total === 1 ? 'property' : 'properties'} found</p>
+          <p className="text-sm text-neutral-400">Найдено {total} {total === 1 ? 'объект' : 'объектов'}</p>
         )}
       </div>
 
@@ -209,9 +209,9 @@ export default function ListingsPage() {
       {!isLoading && properties.length === 0 && (
         <EmptyState
           icon={<Home className="w-12 h-12" />}
-          title="No properties found"
-          description="Try adjusting your search criteria or removing some filters to see more results."
-          action={{ label: 'Clear Filters', onClick: () => setSearchParams({}) }}
+          title="Объекты не найдены"
+          description="Попробуйте изменить параметры поиска или убрать некоторые фильтры."
+          action={{ label: 'Сбросить фильтры', onClick: () => setSearchParams({}) }}
         />
       )}
 

@@ -16,7 +16,7 @@ export class AuthService {
   async register(email: string, password: string, fullName: string, phone: string, role: 'renter' | 'landlord') {
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
-      throw new AppError('An account with this email already exists', 409);
+      throw new AppError('Аккаунт с таким email уже существует', 409);
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
@@ -49,16 +49,16 @@ export class AuthService {
   async login(email: string, password: string) {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      throw new AppError('Invalid email or password', 401);
+      throw new AppError('Неверный email или пароль', 401);
     }
 
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (!valid) {
-      throw new AppError('Invalid email or password', 401);
+      throw new AppError('Неверный email или пароль', 401);
     }
 
     if (!user.emailVerified) {
-      throw new AppError('Please verify your email before logging in', 403);
+      throw new AppError('Пожалуйста, подтвердите email перед входом', 403);
     }
 
     const payload: TokenPayload = { userId: user.id, role: user.role };
@@ -82,12 +82,12 @@ export class AuthService {
     try {
       payload = verifyRefreshToken(token);
     } catch {
-      throw new AppError('Invalid or expired refresh token', 401);
+      throw new AppError('Недействительный или просроченный токен обновления', 401);
     }
 
     const user = await prisma.user.findUnique({ where: { id: payload.userId } });
     if (!user || user.refreshToken !== token) {
-      throw new AppError('Invalid refresh token', 401);
+      throw new AppError('Недействительный токен обновления', 401);
     }
 
     const newPayload: TokenPayload = { userId: user.id, role: user.role };
@@ -114,12 +114,12 @@ export class AuthService {
     try {
       payload = verifyEmailToken(token);
     } catch {
-      throw new AppError('Invalid or expired verification link', 400);
+      throw new AppError('Недействительная или просроченная ссылка подтверждения', 400);
     }
 
     const user = await prisma.user.findUnique({ where: { id: payload.userId } });
     if (!user) {
-      throw new AppError('User not found', 404);
+      throw new AppError('Пользователь не найден', 404);
     }
 
     await prisma.user.update({
@@ -150,12 +150,12 @@ export class AuthService {
     try {
       payload = verifyEmailToken(token);
     } catch {
-      throw new AppError('Invalid or expired reset link', 400);
+      throw new AppError('Недействительная или просроченная ссылка сброса', 400);
     }
 
     const user = await prisma.user.findUnique({ where: { id: payload.userId } });
     if (!user || user.resetToken !== token || !user.resetTokenExp || user.resetTokenExp < new Date()) {
-      throw new AppError('Invalid or expired reset link', 400);
+      throw new AppError('Недействительная или просроченная ссылка сброса', 400);
     }
 
     const passwordHash = await bcrypt.hash(newPassword, 10);

@@ -16,12 +16,12 @@ export default function Header() {
 
   const navLinks = isAuthenticated && user?.role === 'landlord'
     ? [
-        { to: '/listings', label: 'Browse', icon: Search },
-        { to: '/landlord/dashboard', label: 'Dashboard', icon: Building2 },
+        { to: '/listings', label: 'Поиск', icon: Search },
+        { to: '/landlord/dashboard', label: 'Панель управления', icon: Building2 },
       ]
     : [
-        { to: '/listings', label: 'Browse', icon: Search },
-        { to: '/favorites', label: 'Favorites', icon: Heart },
+        { to: '/listings', label: 'Поиск', icon: Search },
+        { to: '/favorites', label: 'Избранное', icon: Heart },
       ];
 
   return (
@@ -66,13 +66,13 @@ export default function Header() {
               <Link to="/login">
                 <Button variant="ghost" size="sm">
                   <LogIn className="w-4 h-4 mr-1.5" />
-                  Sign In
+                  Войти
                 </Button>
               </Link>
               <Link to="/register">
                 <Button variant="primary" size="sm">
                   <UserPlus className="w-4 h-4 mr-1.5" />
-                  Sign Up
+                  Регистрация
                 </Button>
               </Link>
             </>
@@ -107,19 +107,19 @@ export default function Header() {
             {isAuthenticated && user ? (
               <>
                 <Link to="/profile" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-3 text-sm font-medium text-neutral-600 hover:bg-neutral-50 rounded-xl transition-colors">
-                  <Settings className="w-5 h-5" /> Profile
+                  <Settings className="w-5 h-5" /> Профиль
                 </Link>
                 <button onClick={handleLogout} className="flex items-center gap-3 px-3 py-3 text-sm font-medium text-red-600 hover:bg-red-50 rounded-xl transition-colors w-full">
-                  <LogOut className="w-5 h-5" /> Sign Out
+                  <LogOut className="w-5 h-5" /> Выйти
                 </button>
               </>
             ) : (
               <>
                 <Link to="/login" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-3 text-sm font-medium text-neutral-600 hover:bg-neutral-50 rounded-xl transition-colors">
-                  <LogIn className="w-5 h-5" /> Sign In
+                  <LogIn className="w-5 h-5" /> Войти
                 </Link>
                 <Link to="/register" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-3 text-sm font-medium text-brand-600 hover:bg-brand-50 rounded-xl transition-colors">
-                  <UserPlus className="w-5 h-5" /> Sign Up
+                  <UserPlus className="w-5 h-5" /> Регистрация
                 </Link>
               </>
             )}

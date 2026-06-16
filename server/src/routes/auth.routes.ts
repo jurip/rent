@@ -9,25 +9,25 @@ const authService = new AuthService();
 
 // Schemas
 const registerSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
-  fullName: z.string().min(2, 'Full name is required'),
-  phone: z.string().min(5, 'Phone number is required'),
+  email: z.string().email('Неверный формат email'),
+  password: z.string().min(8, 'Пароль должен содержать минимум 8 символов'),
+  fullName: z.string().min(2, 'Имя и фамилия обязательны'),
+  phone: z.string().min(5, 'Номер телефона обязателен'),
   role: z.enum(['renter', 'landlord']),
 });
 
 const loginSchema = z.object({
-  email: z.string().email('Invalid email address'),
-  password: z.string().min(1, 'Password is required'),
+  email: z.string().email('Неверный формат email'),
+  password: z.string().min(1, 'Пароль обязателен'),
 });
 
 const forgotPasswordSchema = z.object({
-  email: z.string().email('Invalid email address'),
+  email: z.string().email('Неверный формат email'),
 });
 
 const resetPasswordSchema = z.object({
   token: z.string().min(1),
-  password: z.string().min(8, 'Password must be at least 8 characters'),
+  password: z.string().min(8, 'Пароль должен содержать минимум 8 символов'),
 });
 
 const refreshSchema = z.object({
@@ -42,7 +42,7 @@ router.post('/register', validate(registerSchema), async (req: Request, res: Res
     res.status(201).json({
       success: true,
       data: result,
-      message: 'Registration successful. Please check your email to verify your account.',
+      message: 'Регистрация прошла успешно. Проверьте почту для подтверждения аккаунта.',
     });
   } catch (error) {
     next(error);
@@ -81,7 +81,7 @@ router.post('/refresh', async (req: Request, res: Response, next: NextFunction) 
   try {
     const token = req.cookies?.refreshToken || req.body.refreshToken;
     if (!token) {
-      res.status(401).json({ success: false, message: 'No refresh token provided' });
+      res.status(401).json({ success: false, message: 'Токен обновления не предоставлен' });
       return;
     }
     const result = await authService.refreshAccessToken(token);
@@ -108,7 +108,7 @@ router.post('/logout', authenticate, async (req: Request, res: Response, next: N
   try {
     await authService.logout(req.user!.userId);
     res.clearCookie('refreshToken', { path: '/' });
-    res.json({ success: true, message: 'Logged out successfully' });
+    res.json({ success: true, message: 'Вы успешно вышли из системы' });
   } catch (error) {
     next(error);
   }
@@ -119,11 +119,11 @@ router.get('/verify-email', async (req: Request, res: Response, next: NextFuncti
   try {
     const token = req.query.token as string;
     if (!token) {
-      res.status(400).json({ success: false, message: 'Verification token is required' });
+      res.status(400).json({ success: false, message: 'Требуется токен подтверждения' });
       return;
     }
     await authService.verifyEmail(token);
-    res.json({ success: true, message: 'Email verified successfully. You can now log in.' });
+    res.json({ success: true, message: 'Email успешно подтверждён. Теперь вы можете войти.' });
   } catch (error) {
     next(error);
   }
@@ -133,7 +133,7 @@ router.get('/verify-email', async (req: Request, res: Response, next: NextFuncti
 router.post('/forgot-password', validate(forgotPasswordSchema), async (req: Request, res: Response, next: NextFunction) => {
   try {
     await authService.forgotPassword(req.body.email);
-    res.json({ success: true, message: 'If an account with that email exists, a password reset link has been sent.' });
+    res.json({ success: true, message: 'Если аккаунт с таким email существует, на него отправлена ссылка для сброса пароля.' });
   } catch (error) {
     next(error);
   }
@@ -143,7 +143,7 @@ router.post('/forgot-password', validate(forgotPasswordSchema), async (req: Requ
 router.post('/reset-password', validate(resetPasswordSchema), async (req: Request, res: Response, next: NextFunction) => {
   try {
     await authService.resetPassword(req.body.token, req.body.password);
-    res.json({ success: true, message: 'Password reset successfully. You can now log in with your new password.' });
+    res.json({ success: true, message: 'Пароль успешно сброшен. Теперь вы можете войти с новым паролем.' });
   } catch (error) {
     next(error);
   }
@@ -160,7 +160,7 @@ if (process.env.NODE_ENV !== 'production') {
         select: { id: true, email: true, emailToken: true },
       });
       if (!user) {
-        res.json({ success: false, message: 'No unverified users found' });
+        res.json({ success: false, message: 'Неподтверждённые пользователи не найдены' });
         return;
       }
       const link = `${process.env.CLIENT_URL || 'http://localhost:5173'}/verify-email?token=${user.emailToken}`;
@@ -177,7 +177,7 @@ router.get('/me', authenticate, async (req: Request, res: Response, next: NextFu
     const { prisma } = await import('../db/client.js');
     const user = await prisma.user.findUnique({ where: { id: req.user!.userId } });
     if (!user) {
-      res.status(404).json({ success: false, message: 'User not found' });
+      res.status(404).json({ success: false, message: 'Пользователь не найден' });
       return;
     }
     res.json({ success: true, data: authService.sanitizeUser(user) });
@@ -193,7 +193,7 @@ router.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
     return;
   }
   console.error('Auth error:', err);
-  res.status(500).json({ success: false, message: 'Internal server error' });
+  res.status(500).json({ success: false, message: 'Внутренняя ошибка сервера' });
 });
 
 export default router;

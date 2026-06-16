@@ -14,7 +14,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction): v
   const token = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : null;
 
   if (!token) {
-    res.status(401).json({ success: false, message: 'Authentication required' });
+    res.status(401).json({ success: false, message: 'Требуется авторизация' });
     return;
   }
 
@@ -23,7 +23,7 @@ export function authenticate(req: Request, res: Response, next: NextFunction): v
     req.user = payload;
     next();
   } catch {
-    res.status(401).json({ success: false, message: 'Invalid or expired token' });
+    res.status(401).json({ success: false, message: 'Недействительный или просроченный токен' });
   }
 }
 
@@ -44,12 +44,12 @@ export function optionalAuth(req: Request, _res: Response, next: NextFunction): 
 export function requireRole(...roles: string[]) {
   return (req: Request, res: Response, next: NextFunction): void => {
     if (!req.user) {
-      res.status(401).json({ success: false, message: 'Authentication required' });
+      res.status(401).json({ success: false, message: 'Требуется авторизация' });
       return;
     }
 
     if (!roles.includes(req.user.role)) {
-      res.status(403).json({ success: false, message: 'Insufficient permissions' });
+      res.status(403).json({ success: false, message: 'Недостаточно прав доступа' });
       return;
     }
 

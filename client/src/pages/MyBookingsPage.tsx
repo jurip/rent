@@ -5,6 +5,7 @@ import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import Skeleton from '@/components/ui/Skeleton';
 import EmptyState from '@/components/ui/EmptyState';
+import { BOOKING_STATUS_LABELS } from '@shared/constants';
 import { Calendar, XCircle } from 'lucide-react';
 
 export default function MyBookingsPage() {
@@ -41,18 +42,18 @@ export default function MyBookingsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-display font-bold text-neutral-900 mb-6">My Booking Requests</h1>
+      <h1 className="text-2xl font-display font-bold text-neutral-900 mb-6">Мои запросы на бронирование</h1>
 
       <div className="flex gap-2 mb-6 overflow-x-auto">
         {statusFilters.map((s) => (
           <button key={s} onClick={() => setFilter(s)} className={`px-4 py-2 rounded-xl text-sm font-medium capitalize whitespace-nowrap transition-colors ${filter === s ? 'bg-brand-600 text-white' : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'}`}>
-            {s || 'All'} ({s ? bookings.filter(b => b.status === s).length : bookings.length})
+            {s ? BOOKING_STATUS_LABELS[s] : 'Все'} ({s ? bookings.filter(b => b.status === s).length : bookings.length})
           </button>
         ))}
       </div>
 
       {bookings.length === 0 ? (
-        <EmptyState icon={<Calendar className="w-12 h-12" />} title="No booking requests" description="When you submit booking requests for properties, they will appear here." action={{ label: 'Browse Properties', to: '/listings' }} />
+        <EmptyState icon={<Calendar className="w-12 h-12" />} title="Нет запросов на бронирование" description="Когда вы отправите запросы на бронирование объектов, они появятся здесь." action={{ label: 'Смотреть объекты', to: '/listings' }} />
       ) : (
         <div className="space-y-4">
           {bookings.map((booking: any) => (
@@ -63,13 +64,13 @@ export default function MyBookingsPage() {
                   <Link to={`/properties/${booking.propertyId}`} className="font-semibold text-neutral-900 hover:text-brand-600 transition-colors">
                     {booking.property?.title || 'Property'}
                   </Link>
-                  <p className="text-sm text-neutral-500">Move-in: {new Date(booking.moveInDate).toLocaleDateString()} · {booking.durationMonths} months</p>
-                  {booking.responseMessage && <p className="text-sm text-neutral-400 mt-1">Response: {booking.responseMessage}</p>}
+                  <p className="text-sm text-neutral-500">Заезд: {new Date(booking.moveInDate).toLocaleDateString()} · {booking.durationMonths} мес.</p>
+                  {booking.responseMessage && <p className="text-sm text-neutral-400 mt-1">Ответ: {booking.responseMessage}</p>}
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Badge variant={booking.status === 'pending' ? 'warning' : booking.status === 'accepted' ? 'success' : booking.status === 'rejected' ? 'danger' : 'default'}>
-                  {booking.status}
+                  {BOOKING_STATUS_LABELS[booking.status] || booking.status}
                 </Badge>
                 {booking.status === 'pending' && (
                   <Button variant="ghost" size="sm" onClick={() => handleCancel(booking.id)}>

@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button';
 import Skeleton from '@/components/ui/Skeleton';
 import { MapPin, Bed, Bath, Maximize, Calendar, Heart, Share2, Building, ChevronLeft, ChevronRight, X, Phone, Mail } from 'lucide-react';
 import type { Property } from '@shared/types';
+import { PROPERTY_TYPE_LABELS, AMENITY_LABELS } from '@shared/constants';
 
 export default function PropertyDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -31,7 +32,7 @@ export default function PropertyDetailPage() {
       })
       .catch((err) => {
         if (err.response?.status === 404) setError('404');
-        else setError(err.response?.data?.message || 'Failed to load property');
+        else setError(err.response?.data?.message || 'Не удалось загрузить объект');
       })
       .finally(() => setIsLoading(false));
   }, [id]);
@@ -73,8 +74,8 @@ export default function PropertyDetailPage() {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
         <h1 className="text-4xl font-display font-bold text-neutral-300 mb-4">404</h1>
-        <p className="text-neutral-500 mb-6">Property not found. It may have been removed or the link is incorrect.</p>
-        <Link to="/listings"><Button variant="primary">Browse Listings</Button></Link>
+        <p className="text-neutral-500 mb-6">Объект не найден. Возможно, он был удалён или ссылка неверна.</p>
+        <Link to="/listings"><Button variant="primary">Смотреть объявления</Button></Link>
       </div>
     );
   }
@@ -125,10 +126,10 @@ export default function PropertyDetailPage() {
       {/* Lightbox */}
       {lightboxOpen && (
         <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center" onClick={() => setLightboxOpen(false)}>
-          <button className="absolute top-4 right-4 p-2 text-white/70 hover:text-white transition-colors" onClick={() => setLightboxOpen(false)} aria-label="Close lightbox">
+          <button className="absolute top-4 right-4 p-2 text-white/70 hover:text-white transition-colors" onClick={() => setLightboxOpen(false)} aria-label="Закрыть">
             <X className="w-8 h-8" aria-hidden="true" />
           </button>
-          <img src={images[currentImage]?.url} alt={property?.title || 'Property image'} className="max-h-[90vh] max-w-[90vw] object-contain" decoding="async" />
+          <img src={images[currentImage]?.url} alt={property?.title || 'Изображение объекта'} className="max-h-[90vh] max-w-[90vw] object-contain" decoding="async" />
           {images.length > 1 && (
             <>
               <button
@@ -174,34 +175,34 @@ export default function PropertyDetailPage() {
                 </div>
               </div>
               <p className="text-2xl font-bold text-brand-600">
-                {formatPrice(property.price)}<span className="text-base font-normal text-neutral-400">/month</span>
+                {formatPrice(property.price)}<span className="text-base font-normal text-neutral-400">/мес</span>
               </p>
             </div>
 
             {/* Stats */}
             <div className="flex flex-wrap gap-6 p-5 bg-neutral-50 rounded-2xl">
-              <div className="flex items-center gap-2"><Bed className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">{property.bedrooms} {property.bedrooms === 0 ? 'Studio' : property.bedrooms === 1 ? 'Bedroom' : 'Bedrooms'}</span></div>
-              <div className="flex items-center gap-2"><Bath className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">{property.bathrooms} {property.bathrooms === 1 ? 'Bathroom' : 'Bathrooms'}</span></div>
-              <div className="flex items-center gap-2"><Maximize className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">{property.squareFeet.toLocaleString()} sqft</span></div>
-              <div className="flex items-center gap-2"><Building className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium capitalize">{property.propertyType}</span></div>
-              {property.yearBuilt && <div className="flex items-center gap-2"><Calendar className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">Built {property.yearBuilt}</span></div>}
+              <div className="flex items-center gap-2"><Bed className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">{property.bedrooms} {property.bedrooms === 0 ? 'Студия' : property.bedrooms === 1 ? 'Спальня' : 'Спальни'}</span></div>
+              <div className="flex items-center gap-2"><Bath className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">{property.bathrooms} {property.bathrooms === 1 ? 'Ванная' : 'Ванные'}</span></div>
+              <div className="flex items-center gap-2"><Maximize className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">{property.squareFeet.toLocaleString()} м²</span></div>
+              <div className="flex items-center gap-2"><Building className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">{PROPERTY_TYPE_LABELS[property.propertyType] || property.propertyType}</span></div>
+              {property.yearBuilt && <div className="flex items-center gap-2"><Calendar className="w-5 h-5 text-neutral-400" /><span className="text-sm font-medium">Построен в {property.yearBuilt}</span></div>}
             </div>
 
             {/* Description */}
             <div>
-              <h2 className="text-xl font-display font-semibold text-neutral-900 mb-3">About this property</h2>
+              <h2 className="text-xl font-display font-semibold text-neutral-900 mb-3">Об этом объекте</h2>
               <p className="text-neutral-600 leading-relaxed whitespace-pre-line">{property.description}</p>
             </div>
 
             {/* Amenities */}
             {property.amenities?.length > 0 && (
               <div>
-                <h2 className="text-xl font-display font-semibold text-neutral-900 mb-3">Amenities</h2>
+                <h2 className="text-xl font-display font-semibold text-neutral-900 mb-3">Удобства</h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   {property.amenities.map((a) => (
-                    <div key={a} className="flex items-center gap-2 px-3 py-2.5 bg-neutral-50 rounded-xl text-sm text-neutral-700 capitalize">
+                    <div key={a} className="flex items-center gap-2 px-3 py-2.5 bg-neutral-50 rounded-xl text-sm text-neutral-700">
                       <div className="w-2 h-2 bg-brand-400 rounded-full flex-shrink-0" />
-                      {a.replace(/-/g, ' ')}
+                      {AMENITY_LABELS[a] || a.replace(/-/g, ' ')}
                     </div>
                   ))}
                 </div>
@@ -210,8 +211,8 @@ export default function PropertyDetailPage() {
 
             {/* Reviews placeholder */}
             <div>
-              <h2 className="text-xl font-display font-semibold text-neutral-900 mb-3">Reviews</h2>
-              <p className="text-neutral-400 text-sm">No reviews yet. Be the first to review this property!</p>
+              <h2 className="text-xl font-display font-semibold text-neutral-900 mb-3">Отзывы</h2>
+              <p className="text-neutral-400 text-sm">Пока нет отзывов. Будьте первым, кто оставит отзыв!</p>
             </div>
           </div>
 
@@ -226,7 +227,7 @@ export default function PropertyDetailPage() {
                   </div>
                   <div>
                     <p className="font-medium text-neutral-900">{property.landlord?.fullName || 'Landlord'}</p>
-                    <p className="text-sm text-neutral-400">Property Owner</p>
+                    <p className="text-sm text-neutral-400">Владелец объекта</p>
                   </div>
                 </div>
                 <div className="space-y-2 text-sm">
@@ -243,7 +244,7 @@ export default function PropertyDetailPage() {
                 <div className="space-y-3">
                   {!showBookingForm ? (
                     <Button variant="primary" size="lg" className="w-full" onClick={() => setShowBookingForm(true)}>
-                      Request to Book
+                      Запросить бронирование
                     </Button>
                   ) : (
                     <BookingRequestForm propertyId={property.id} onCancel={() => setShowBookingForm(false)} />
@@ -253,12 +254,12 @@ export default function PropertyDetailPage() {
               {!isAuthenticated && (
                 <Link to={`/login?redirect=/properties/${property.id}`}>
                   <Button variant="primary" size="lg" className="w-full">
-                    Sign In to Book
+                    Войдите, чтобы забронировать
                   </Button>
                 </Link>
               )}
               {isAuthenticated && user?.role === 'landlord' && (
-                <p className="text-sm text-neutral-400 text-center">Landlords cannot book properties</p>
+                <p className="text-sm text-neutral-400 text-center">Арендодатели не могут бронировать объекты</p>
               )}
             </div>
           </div>
@@ -284,7 +285,7 @@ function BookingRequestForm({ propertyId, onCancel }: { propertyId: string; onCa
       await api.post('/bookings', { propertyId, moveInDate, durationMonths, message });
       setSuccess(true);
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to submit booking request');
+      setError(err.response?.data?.message || 'Не удалось отправить запрос на бронирование');
     } finally {
       setSubmitting(false);
     }
@@ -298,8 +299,8 @@ function BookingRequestForm({ propertyId, onCancel }: { propertyId: string; onCa
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <p className="text-sm font-medium text-neutral-700">Request sent!</p>
-        <p className="text-xs text-neutral-400 mt-1">The landlord will respond soon.</p>
+        <p className="text-sm font-medium text-neutral-700">Запрос отправлен!</p>
+        <p className="text-xs text-neutral-400 mt-1">Владелец скоро ответит.</p>
       </div>
     );
   }
@@ -309,23 +310,23 @@ function BookingRequestForm({ propertyId, onCancel }: { propertyId: string; onCa
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
       <div>
-        <label className="block text-xs font-medium text-neutral-500 mb-1">Move-in Date</label>
+        <label className="block text-xs font-medium text-neutral-500 mb-1">Дата заезда</label>
         <input type="date" min={today} value={moveInDate} onChange={(e) => setMoveInDate(e.target.value)} required className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm" />
       </div>
       <div>
-        <label className="block text-xs font-medium text-neutral-500 mb-1">Duration</label>
+        <label className="block text-xs font-medium text-neutral-500 mb-1">Срок</label>
         <select value={durationMonths} onChange={(e) => setDurationMonths(Number(e.target.value))} className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm">
-          {[3, 6, 12, 24, 36].map((m) => <option key={m} value={m}>{m} months</option>)}
+          {[3, 6, 12, 24, 36].map((m) => <option key={m} value={m}>{m} мес.</option>)}
         </select>
       </div>
       <div>
-        <label className="block text-xs font-medium text-neutral-500 mb-1">Message</label>
-        <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Tell the landlord about yourself..." rows={3} className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm resize-none" />
+        <label className="block text-xs font-medium text-neutral-500 mb-1">Сообщение</label>
+        <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Расскажите о себе владельцу..." rows={3} className="w-full px-3 py-2 border border-neutral-200 rounded-lg text-sm resize-none" />
       </div>
       {error && <p className="text-xs text-red-500">{error}</p>}
       <div className="flex gap-2">
-        <Button type="submit" variant="primary" size="sm" className="flex-1" disabled={submitting}>{submitting ? 'Sending...' : 'Send Request'}</Button>
-        <Button type="button" variant="ghost" size="sm" onClick={onCancel}>Cancel</Button>
+        <Button type="submit" variant="primary" size="sm" className="flex-1" disabled={submitting}>{submitting ? 'Отправка...' : 'Отправить запрос'}</Button>
+        <Button type="button" variant="ghost" size="sm" onClick={onCancel}>Отмена</Button>
       </div>
     </form>
   );
